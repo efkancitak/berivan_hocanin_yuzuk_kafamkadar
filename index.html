@@ -16,7 +16,6 @@
       <span class="brand-mark" aria-hidden="true">⌁</span>
       <span><b>GÖĞÜS</b><small>kurul ellerinizden öper</small></span>
     </button>
-    <div class="night-chip"><span></span> Yarın sınav modu</div>
     <label class="search">
       <span aria-hidden="true">⌕</span>
       <input id="global-search" type="search" placeholder="Konu, bulgu, eşik ara…" autocomplete="off">
@@ -28,13 +27,13 @@
   <div class="shell">
     <aside class="sidebar" aria-label="Ana menü">
       <nav id="main-nav">
-        <button class="nav-item active" data-view="dashboard"><span>⌂</span> Kamp masası</button>
+        <button class="nav-item active" data-view="dashboard"><span>⌂</span> Saray Muhallebecisi Kurul Planlama</button>
         <button class="nav-item" data-view="starred"><span>★</span> Yıldızlı kısımlar <em id="star-count">0</em></button>
         <button class="nav-item" data-view="topics"><span>▤</span> Konu notları <em>14</em></button>
         <button class="nav-item" data-view="algorithms"><span>↳</span> Hızlı tablolar</button>
         <button class="nav-item" data-view="cards"><span>▰</span> Öğrenme kartları</button>
-        <button class="nav-item" data-view="quiz"><span>✓</span> Soru modu</button>
-        <button class="nav-item" data-view="sources"><span>◉</span> Kaynak haritası</button>
+        <button class="nav-item" data-view="quiz"><span>✓</span> Hastalığı Yönet</button>
+        <button class="nav-item" data-view="sources"><span>◉</span> Çamda Kaybolmalık Kaynak Haritası</button>
       </nav>
       <div class="side-progress">
         <div><span>Genel ilerleme</span><b id="side-progress-value">0%</b></div>
@@ -52,7 +51,7 @@
             <p class="lead">Slaytlardaki sınav cümleleri, el yazısıyla işaretlenen noktalar ve klinik eşikler tek bir çalışma akışında.</p>
             <div class="hero-actions">
               <button class="primary" data-view="starred">★ Yıldızlılardan başla</button>
-              <button class="secondary" data-view="quiz">Soru çöz</button>
+              <button class="secondary" data-view="quiz">Hastalığı yönet</button>
             </div>
           </div>
           <div class="pulse-card">
@@ -135,10 +134,11 @@
       </section>
 
       <section class="view" id="view-quiz" aria-labelledby="quiz-title">
-        <div class="page-head"><div><span class="kicker">AÇIKLAMALI DENEME</span><h1 id="quiz-title">Soru modu</h1><p>Her yanıttan sonra kısa gerekçe açılır; yanlışlar otomatik olarak tekrar listene eklenir.</p></div><label class="select-wrap">Konu <select id="quiz-topic"><option value="all">Karma kurul</option></select></label></div>
+        <div class="page-head"><div><span class="kicker">AÇIKLAMALI DENEME</span><h1 id="quiz-title">Hastalığı Yönet</h1><p>Her yanıttan sonra kısa gerekçe açılır; görselli sorularla radyolojik paternler de sınanır.</p></div><label class="select-wrap">Konu <select id="quiz-topic"><option value="all">Karma kurul</option></select></label></div>
         <div class="quiz-layout">
           <div class="quiz-card" id="quiz-card">
             <div class="quiz-meta"><span id="quiz-topic-label"></span><b id="quiz-counter"></b></div>
+            <div id="quiz-visual" class="quiz-visual" hidden></div>
             <h2 id="quiz-question"></h2>
             <div id="quiz-options" class="quiz-options"></div>
             <div id="quiz-explanation" class="explanation" hidden></div>
@@ -154,8 +154,7 @@
       </section>
 
       <section class="view" id="view-sources" aria-labelledby="sources-title">
-        <div class="page-head"><div><span class="kicker">KAPSAM KONTROLÜ</span><h1 id="sources-title">Kaynak haritası</h1><p>Çalışmaya alınan her dosya ve özel not katmanı burada görünür.</p></div><div class="source-total"><b>578</b><span>PDF sayfası</span></div></div>
-        <div class="source-note">ℹ️ İçerikler eğitim amaçlı özetlenmiştir. Slaytlardaki dönemsel/eski eşikler “ders slaytı” etiketiyle korunmuştur; klinik karar yerine kullanılmaz.</div>
+        <div class="page-head"><div><span class="kicker">KAPSAM KONTROLÜ</span><h1 id="sources-title">Çamda Kaybolmalık Kaynak Haritası</h1><p>Çalışmaya alınan her dosya ve özel not katmanı burada görünür.</p></div><div class="source-total"><b>578</b><span>PDF sayfası</span></div></div>
         <div class="source-grid" id="source-grid"></div>
       </section>
 
@@ -166,6 +165,11 @@
     </main>
   </div>
 
+  <dialog id="visual-dialog" class="visual-dialog" aria-labelledby="visual-dialog-title">
+    <button class="visual-close" data-close-visual aria-label="Görseli kapat">×</button>
+    <img id="visual-dialog-image" alt="">
+    <div class="visual-dialog-copy"><b id="visual-dialog-title"></b><small id="visual-dialog-source"></small><p id="visual-dialog-prompt"></p></div>
+  </dialog>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script src="content.js"></script>
   <script src="app.js"></script>

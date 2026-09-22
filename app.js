@@ -54,13 +54,19 @@
     $("#topic-list").innerHTML=topics.map(t=>`<article class="topic-row"><div class="topic-icon" style="color:${t.accent}">${t.icon}</div><div><h2>${esc(t.title)}</h2><p>${esc(t.summary)}</p><div class="metrics"><span>★ ${t.stars.length} vurgu</span><span>▤ ${t.blocks.length} bölüm</span><span>${t.pages||32} sayfa</span></div></div><button class="open-topic" data-topic="${t.id}" aria-label="${esc(t.title)} konusunu aç">→</button></article>`).join("");
   }
 
+  function renderTopicVisuals(t){
+    const visuals=D.visuals?.[t.id] || [];
+    if(!visuals.length) return "";
+    return `<section class="content-block visual-learning"><div class="visual-heading"><div><span class="kicker">PDF'DEN GÖRÜNTÜYLE ÖĞREN</span><h2>Bak → bul → yüksek sesle tarif et</h2></div><span>${visuals.length} görsel</span></div><div class="visual-grid">${visuals.map((v,i)=>`<button class="visual-card" data-visual-key="${t.id}:${i}" aria-label="${esc(v.title)} görselini büyüt"><img src="${esc(v.src)}" alt="${esc(v.alt)}" loading="lazy"><span><b>${esc(v.title)}</b><small>${esc(v.source)}</small><em>${esc(v.prompt)}</em></span></button>`).join("")}</div></section>`;
+  }
+
   function openTopic(id){
     const t=topicMap[id]; if(!t) return;
     state.topic=id;
     const savedTopic=state.bookmarks.has(id);
     $("#topic-detail").innerHTML=`
       <div class="topic-hero"><button class="back-btn" data-view="topics">← Konu listesi</button><span class="kicker">${t.no} • ${esc(t.source)}</span><button class="bookmark ${savedTopic?'saved':''}" data-bookmark="${t.id}" aria-label="Konuyu işaretle">★</button><h1>${esc(t.title)}</h1><p>${esc(t.summary)}</p><div class="topic-tools"><button class="secondary" data-view="starred">★ Vurguları aç</button><button class="secondary" data-card-filter="${t.id}">▰ Bu konunun kartları</button><button class="secondary" data-quiz-filter="${t.id}">✓ Bu konudan sorular</button></div></div>
-      <div class="detail-layout"><div>${t.blocks.map((b,i)=>`<section class="content-block"><button class="bookmark ${state.bookmarks.has(`${t.id}:${i}`)?'saved':''}" data-bookmark="${t.id}:${i}" aria-label="Bölümü işaretle">★</button><h2>${esc(b.h)}</h2><ul>${b.items.map(x=>`<li>${highlightThresholds(esc(x))}</li>`).join("")}</ul></section>`).join("")}</div><aside class="side-stack"><div class="callout"><h3>SINAV CÜMLESİ</h3><p>${esc(t.exam)}</p></div><div class="callout"><h3>HAFIZA ÇENGELİ</h3><p>${esc(t.memory)}</p></div><div class="callout"><h3>TUZAKLAR</h3><ul>${t.pitfalls.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div><div class="callout"><h3>KAYNAK</h3><p>${esc(t.source)} • ${t.pages||32} sayfa</p></div></aside></div>`;
+      <div class="detail-layout"><div>${renderTopicVisuals(t)}${t.blocks.map((b,i)=>`<section class="content-block"><button class="bookmark ${state.bookmarks.has(`${t.id}:${i}`)?'saved':''}" data-bookmark="${t.id}:${i}" aria-label="Bölümü işaretle">★</button><h2>${esc(b.h)}</h2><ul>${b.items.map(x=>`<li>${highlightThresholds(esc(x))}</li>`).join("")}</ul></section>`).join("")}</div><aside class="side-stack"><div class="callout"><h3>SINAV CÜMLESİ</h3><p>${esc(t.exam)}</p></div><div class="callout"><h3>HAFIZA ÇENGELİ</h3><p>${esc(t.memory)}</p></div><div class="callout"><h3>TUZAKLAR</h3><ul>${t.pitfalls.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div><div class="callout"><h3>KAYNAK</h3><p>${esc(t.source)} • ${t.pages||32} sayfa</p></div></aside></div>`;
     nav("topic");
   }
 
@@ -110,10 +116,29 @@
     const [topic,q,opts]=entry.q, t=topicMap[topic];
     $("#quiz-topic-label").textContent=t.title.toUpperCase();
     $("#quiz-counter").textContent=`${state.quizIndex+1} / ${state.quizDeck.length}`;
+    const visual=$("#quiz-visual");
+    if(entry.q[5]){
+      visual.innerHTML=`<button class="quiz-visual-button" data-quiz-visual aria-label="Soru görselini büyüt"><img src="${esc(entry.q[5])}" alt="${esc(entry.q[6]||q)}"><span>⌕ Büyüt</span></button><small>${esc(entry.q[6]||"")}</small>`;
+      visual.hidden=false;
+    }else{
+      visual.innerHTML="";
+      visual.hidden=true;
+    }
     $("#quiz-question").textContent=q;
     $("#quiz-options").innerHTML=opts.map((o,i)=>`<button class="quiz-option" data-answer="${i}"><b>${String.fromCharCode(65+i)}.</b> ${esc(o)}</button>`).join("");
     $("#quiz-explanation").hidden=true; $("#quiz-next").hidden=true;
     renderScore();
+  }
+
+  function openVisual(v){
+    if(!v) return;
+    const dialog=$("#visual-dialog");
+    $("#visual-dialog-image").src=v.src;
+    $("#visual-dialog-image").alt=v.alt || v.title || "Ders görseli";
+    $("#visual-dialog-title").textContent=v.title || "Görüntü kartı";
+    $("#visual-dialog-source").textContent=v.source || "";
+    $("#visual-dialog-prompt").textContent=v.prompt || "";
+    if(dialog.showModal) dialog.showModal(); else dialog.setAttribute("open","");
   }
 
   function answerQuiz(choice){
@@ -173,6 +198,9 @@
       const bm=e.target.closest("[data-bookmark]"); if(bm){const id=bm.dataset.bookmark;if(state.bookmarks.has(id))state.bookmarks.delete(id);else state.bookmarks.add(id);bm.classList.toggle("saved");persist();updateProgress();toast(state.bookmarks.has(id)?"Tekrar listesine eklendi":"İşaret kaldırıldı");return;}
       const cf=e.target.closest("[data-card-filter]"); if(cf){state.cardFilter=cf.dataset.cardFilter;$("#card-topic").value=state.cardFilter;state.cardIndex=0;nav("cards");return;}
       const qf=e.target.closest("[data-quiz-filter]"); if(qf){state.quizFilter=qf.dataset.quizFilter;$("#quiz-topic").value=state.quizFilter;nav("quiz");resetQuiz();return;}
+      const vk=e.target.closest("[data-visual-key]"); if(vk){const [topic,index]=vk.dataset.visualKey.split(":");openVisual(D.visuals?.[topic]?.[Number(index)]);return;}
+      const qv=e.target.closest("[data-quiz-visual]"); if(qv){const q=state.quizDeck[state.quizIndex]?.q;if(q?.[5])openVisual({src:q[5],alt:q[6]||q[1],title:q[6]||"Soru görseli",source:topicMap[q[0]]?.source,prompt:"Görseli sistematik tarif et, sonra soruya dön."});return;}
+      const cv=e.target.closest("[data-close-visual]"); if(cv){$("#visual-dialog").close();return;}
       const ans=e.target.closest("[data-answer]"); if(ans){answerQuiz(Number(ans.dataset.answer));return;}
     });
     $("#topic-sort").addEventListener("change",renderTopicList);
@@ -188,6 +216,7 @@
     $("#card-topic").addEventListener("change",e=>{state.cardFilter=e.target.value;state.cardIndex=0;renderCard();});
     $("#quiz-topic").addEventListener("change",e=>{state.quizFilter=e.target.value;resetQuiz();});
     $("#quiz-next").addEventListener("click",nextQuiz); $("#quiz-reset").addEventListener("click",resetQuiz);
+    $("#visual-dialog").addEventListener("click",e=>{if(e.target===$("#visual-dialog"))$("#visual-dialog").close();});
   }
 
   function setupWebMCP(){
@@ -202,7 +231,8 @@
   function init(){
     $("#star-count").textContent=D.topics.reduce((n,t)=>n+t.stars.length,0);
     renderDashboard(); renderStars(); renderTopicList(); renderAlgorithms(); renderSources(); fillSelects(); buildDeck(); setupEvents(); setupWebMCP();
-    if(location.hash==="#starred")nav("starred",{keepScroll:true}); else if(location.hash==="#topics")nav("topics",{keepScroll:true});
+    const initial=location.hash.slice(1);
+    if(["starred","topics","algorithms","cards","quiz","sources","search"].includes(initial)) nav(initial,{keepScroll:true});
   }
   init();
 })();

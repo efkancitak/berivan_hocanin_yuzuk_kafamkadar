@@ -162,6 +162,39 @@ window.STUDY_DATA = {
     }
   ],
 
+  visuals:{
+    plevra:[
+      {src:"assets/pleural-effusion-radiology.jpg",alt:"Plevral efüzyonlu iki PA akciğer grafisinin karşılaştırması",title:"Plevral efüzyonu grafide yakala",source:"6•PLEVRA SIVILARI 2.pdf • s.19",prompt:"Önce kostofrenik sinüsü, sonra sıvının üst sınırını ve mediasten yönünü tarif et."},
+      {src:"assets/pleural-ultrasound.jpg",alt:"Ultrasonografide plevral sıvı ve kollabe akciğer görünümü",title:"USG’de sıvı–akciğer ilişkisi",source:"6•PLEVRA SIVILARI 2.pdf • s.18",prompt:"Siyah alanı, diyaframı ve sıvı içinde yüzen kollabe akciğeri tek tek göster."},
+      {src:"assets/pneumothorax-xray.jpg",alt:"Sağ pnömotoraks ve çökmüş akciğerin işaretlendiği akciğer grafisi",title:"Pnömotoraksta damar izi avı",source:"6•PLEVRA SIVILARI 2.pdf • s.87",prompt:"Plevral çizginin dışında neden damar izi görünmediğini açıklayıp etkilenen tarafı söyle."}
+    ],
+    abse:[
+      {src:"assets/lung-abscess.jpg",alt:"Grafi ve BT'de hava sıvı seviyeli kalın duvarlı kaviter akciğer lezyonu",title:"Kaviteyi görünce üçlü düşün",source:"Abse-ampiyem.pdf • s.7",prompt:"Hava–sıvı seviyesini bul; apseyi TB, skuamöz hücreli kanser ve GPA ile ayıracak ipuçlarını say."}
+    ],
+    pe:[
+      {src:"assets/pulmonary-embolism-xray.jpg",alt:"Pulmoner embolide akciğer grafisi bulgularını özetleyen ders slaytı",title:"PE grafisi çoğu kez sessizdir",source:"aydın pulmoner emboli.pdf • s.18",prompt:"Westermark ile Hampton hump arasındaki farkı kendi cümlenle söyle; normal grafi PE'yi dışlar mı?"}
+    ],
+    bronkiektazi:[
+      {src:"assets/bronchiectasis-hrct.jpg",alt:"Bronşektazide ekmek içi grafi görünümü ve HRCT'de genişlemiş bronşlar",title:"Taşlı yüzük ve tren rayı",source:"BRONŞEKTAZİ.pdf • s.10",prompt:"HRCT'de bronş çapını komşu arterle karşılaştır; taşlı yüzük işaretini göster."}
+    ],
+    koah:[
+      {src:"assets/copd-hyperinflation.jpg",alt:"KOAH'da aşırı havalanma bulguları ve hiperinflasyonlu akciğer grafisi",title:"Hiperinflasyonu dört bulguyla oku",source:"KOAH son 2.pdf • s.22",prompt:"Diyafram, kalp gölgesi, damar izleri ve retrosternal hava açısından görüntüyü sistematik oku."}
+    ],
+    mesleksel:[
+      {src:"assets/occupational-radiology.jpg",alt:"Silikoziste üst zon ağırlıklı nodüler opasiteleri gösteren grafiler",title:"Yerleşim ayırıcı tanıyı daraltır",source:"Mesleksel AC hast .pdf • s.32",prompt:"Üst zon nodüllerini bul; silikozis ile asbestozisin tipik dağılımını karşılaştır."}
+    ],
+    ph:[
+      {src:"assets/pulmonary-hypertension-xray.jpg",alt:"Pulmoner hipertansiyonda akciğer grafisi bulgularının yıldızlı özeti",title:"Konus belirgin, perifer budanmış",source:"pulmoner hipertansiyon.pdf • s.22",prompt:"Pulmoner konus belirginleşmesi ve periferik budanmanın hemodinamik karşılığını açıkla."}
+    ],
+    tani:[
+      {src:"assets/bronchoscopy.jpg",alt:"Tanı amaçlı bronkoskopi endikasyonlarını sıralayan ders slaytı",title:"Bronkoskopi ne zaman?",source:"tanı yöntemleri.pdf • s.40",prompt:"Listeden santral obstrüksiyon düşündüren üç ipucunu seç."}
+    ],
+    "akciger-ca":[
+      {src:"assets/lung-cancer-ct.jpg",alt:"Toraks BT'de santral ve periferik akciğer kanseri örnekleri",title:"Yerleşim biyopsi yolunu seçtirir",source:"note.np 2 • Akciğer kanserleri s.14",prompt:"Santral ve periferik lezyonları ayır; her biri için ilk doku yolunu söyle."},
+      {src:"assets/solitary-pulmonary-nodule.jpg",alt:"Soliter pulmoner nodül tanımı ve malignite risk ipuçları",title:"SPN tanımı tek bakışta",source:"note.np 2 • Akciğer kanserleri s.26",prompt:"Çap, çevre parankim ve eşlik eden bulgularla SPN tanımını eksiksiz kur."}
+    ]
+  },
+
   algorithms:[
     {title:"Light kriterleri",sub:"Bir tanesi pozitifse eksüda",rows:[["Protein oranı",">0,5"],["LDH oranı",">0,6"],["Sıvı LDH","> serum üst normal sınırının 2/3’ü"],["Diüretik tuzağı","Serum–plevra albümin gradiyenti >1,2 → transüda lehine"]]},
     {title:"Wells — pulmoner emboli",sub:"İki düzeyli modelde >4 PE olası",rows:[["3 puan","DVT bulgusu; PE alternatiften daha olası"],["1,5 puan","Nabız >100; cerrahi/immobilizasyon; önceki VTE"],["1 puan","Hemoptizi; aktif malignite"],["Akış","Olasılık → D-dimer veya doğrudan görüntüleme"]]},
@@ -271,6 +304,14 @@ window.STUDY_DATA = {
     ["akciger-ca","Periferik akciğer kitlesinde en uygun doku yolu?",["BT/US eşliğinde transtorasik biyopsi","Sadece balgam","V/Q","Ter testi"],0,"Periferik lezyon transtorasik görüntüleme eşliğinde örneklenir."],
     ["akciger-ca","PET pozitif mediastinal lenf nodunda doğru yaklaşım?",["Doğrudan evre IV say","Cerrahi öncesi doku doğrula","PET’i tamamen yok say","Yalnız grafi çek"],1,"Enfeksiyon/inflamasyon yalancı pozitif olabilir ve nodal evre tedaviyi değiştirir; EBUS/mediastinoskopiyle doğrula."],
     ["akciger-ca","Hangisi SPN tanımına uymaz?",["Çap <3 cm","Tek ve yuvarlak","Eşlik eden belirgin LAP","Normal parankimle çevrili"],2,"SPN tanımında eşlik eden LAP, atelektazi veya efüzyon yoktur."],
-    ["akciger-ca","PET negatif 7 mm nodül için doğru yorum?",["Malignite kesin dışlandı","PET küçük nodülde sınırlı; risk/BT takibi gerekir","Hemen pnömonektomi","Daima benign hamartom"],1,"PET’in <1 cm lezyonlarda duyarlılığı düşer; klinik risk ve ince kesit BT yönetimi belirler."]
+    ["akciger-ca","PET negatif 7 mm nodül için doğru yorum?",["Malignite kesin dışlandı","PET küçük nodülde sınırlı; risk/BT takibi gerekir","Hemen pnömonektomi","Daima benign hamartom"],1,"PET’in <1 cm lezyonlarda duyarlılığı düşer; klinik risk ve ince kesit BT yönetimi belirler."],
+    ["plevra","Grafide sağ plevral boşlukta damar izlerinin kaybolduğu hiperlüsen alan ve mediale çökmüş akciğer görülüyor. En olası tanı?",["Plevral efüzyon","Pnömotoraks","Lober konsolidasyon","Pulmoner ödem"],1,"Plevral çizginin dışında damar izlerinin kaybolması ve çökmüş akciğer pnömotoraksı gösterir.","assets/pneumothorax-xray.jpg","Sağ pnömotoraks — plevral çizginin dışında vasküler iz yok"],
+    ["plevra","USG’de diyaframın üzerinde anekoik alan içinde kollabe akciğer dokusu izleniyor. Siyah alan neyi temsil eder?",["Konsolidasyon","Plevral sıvı","Pnömotoraks","Plevral kalınlaşma"],1,"Sıvı USG’de anekoik/siyah görünür; kollabe akciğer sıvı içinde hareket edebilir.","assets/pleural-ultrasound.jpg","Plevral efüzyonun ultrasonografik görünümü"],
+    ["abse","Bu hava–sıvı seviyeli kalın duvarlı kaviter lezyonda apse dışında özellikle hangi üçlü birlikte düşünülmelidir?",["TB – skuamöz hücreli kanser – GPA","Astım – KOAH – bronşit","Sarkoidoz – efüzyon – ödem","Kist hidatik – plevral plak – PAH"],0,"Kaviter lezyonun kritik ayırıcıları arasında TB, kaviteleşebilen skuamöz hücreli kanser ve GPA vardır.","assets/lung-abscess.jpg","Grafi ve BT'de hava–sıvı seviyeli kaviter lezyon"],
+    ["bronkiektazi","HRCT’de genişlemiş bronş çapının eşlik eden pulmoner arterden büyük olması hangi işarettir?",["Hampton hump","Taşlı yüzük (signet-ring)","Westermark","Egg-shell"],1,"Bronş çapının komşu arterden büyük olması bronşektazinin taşlı yüzük işaretidir.","assets/bronchiectasis-hrct.jpg","Bronşektazide HRCT ve taşlı yüzük paterni"],
+    ["koah","Grafide diyaframların düzleşmesi, damar gölgelerinin azalması ve dar-vertikal kalp görünümü en çok neyi destekler?",["Hiperinflasyon/amfizem","Plevral efüzyon","Lober atelektazi","Kardiyojenik ödem"],0,"Bu kombinasyon KOAH/amfizemdeki aşırı havalanma paternidir.","assets/copd-hyperinflation.jpg","KOAH'da radyografik hiperinflasyon"],
+    ["mesleksel","Üst zon ağırlıklı nodüler opasiteler ve TB risk artışıyla ilişkili meslek hastalığı hangisidir?",["Asbestozis","Silikozis","RADS","Berilyozis"],1,"Silikozis üst lob nodülleri ve artmış tüberküloz riskiyle klasik olarak eşleşir.","assets/occupational-radiology.jpg","Üst zon ağırlıklı pnömokonyoz paterni"],
+    ["akciger-ca","Görseldeki santral ve periferik kitleler için doğru ilk doku yolu eşleşmesi hangisidir?",["Santral transtorasik – periferik balgam","Santral bronkoskopi – periferik görüntüleme eşliğinde transtorasik biyopsi","İkisinde de yalnız PET","İkisinde de rijit bronkoskopi"],1,"Santral lezyon bronkoskopiye; periferik lezyon BT/US eşliğinde transtorasik biyopsiye daha uygundur.","assets/lung-cancer-ct.jpg","Santral ve periferik akciğer kitleleri"],
+    ["akciger-ca","Bu slayttaki tanıma göre hangisi soliter pulmoner nodül tanımını bozar?",["Çapın 3 cm'den küçük olması","Normal parankimle çevrili olması","Eşlik eden belirgin lenfadenopati","Tek ve yuvarlak olması"],2,"SPN tek, <3 cm ve normal parankimle çevrilidir; belirgin LAP, atelektazi veya efüzyon eşlik etmez.","assets/solitary-pulmonary-nodule.jpg","Soliter pulmoner nodülün kaynak slaytındaki tanımı"]
   ]
 };
