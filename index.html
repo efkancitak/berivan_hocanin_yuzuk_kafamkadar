@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07111f">
+  <meta name="description" content="Göğüs hastalıkları kurul sınavı için kaynaklara dayalı, yıldızlı noktalar, öğrenme kartları ve açıklamalı sorular içeren interaktif çalışma kampı.">
+  <title>Göğüs Hastalıkları — Kurul Kampı</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2307111f'/%3E%3Cpath d='M30 11v18c-4-8-12-12-17-6-6 7-6 24 0 29 5 4 14 0 17-8V31m4-20v18c4-8 12-12 17-6 6 7 6 24 0 29-5 4-14 0-17-8V31' fill='none' stroke='%2348d7c8' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#main">İçeriğe geç</a>
+  <header class="topbar">
+    <button class="brand" data-view="dashboard" aria-label="Ana sayfaya dön">
+      <span class="brand-mark" aria-hidden="true">⌁</span>
+      <span><b>GÖĞÜS</b><small>kurul kampı</small></span>
+    </button>
+    <div class="night-chip"><span></span> Yarın sınav modu</div>
+    <label class="search">
+      <span aria-hidden="true">⌕</span>
+      <input id="global-search" type="search" placeholder="Konu, bulgu, eşik ara…" autocomplete="off">
+      <kbd>⌘ K</kbd>
+    </label>
+    <button class="icon-btn" id="theme-toggle" aria-label="Renk temasını değiştir">◐</button>
+  </header>
+
+  <div class="shell">
+    <aside class="sidebar" aria-label="Ana menü">
+      <nav id="main-nav">
+        <button class="nav-item active" data-view="dashboard"><span>⌂</span> Kamp masası</button>
+        <button class="nav-item" data-view="starred"><span>★</span> Yıldızlı kısımlar <em id="star-count">0</em></button>
+        <button class="nav-item" data-view="topics"><span>▤</span> Konu notları <em>14</em></button>
+        <button class="nav-item" data-view="algorithms"><span>↳</span> Hızlı tablolar</button>
+        <button class="nav-item" data-view="cards"><span>▰</span> Öğrenme kartları</button>
+        <button class="nav-item" data-view="quiz"><span>✓</span> Soru modu</button>
+        <button class="nav-item" data-view="sources"><span>◉</span> Kaynak haritası</button>
+      </nav>
+      <div class="side-progress">
+        <div><span>Genel ilerleme</span><b id="side-progress-value">0%</b></div>
+        <div class="progress"><i id="side-progress-bar"></i></div>
+        <small>İlerleme bu cihazda saklanır.</small>
+      </div>
+    </aside>
+
+    <main id="main" tabindex="-1">
+      <section class="view active" id="view-dashboard" aria-labelledby="dashboard-title">
+        <div class="eyebrow">578 SAYFA + EL YAZISI KATMANI • 14 KAYNAK</div>
+        <div class="hero-grid">
+          <div>
+            <h1 id="dashboard-title">Son geceyi<br><span>aktif hatırlamaya</span> çevir.</h1>
+            <p class="lead">Slaytlardaki sınav cümleleri, el yazısıyla işaretlenen noktalar ve klinik eşikler tek bir çalışma akışında.</p>
+            <div class="hero-actions">
+              <button class="primary" data-view="starred">★ Yıldızlılardan başla</button>
+              <button class="secondary" data-view="quiz">Soru çöz</button>
+            </div>
+          </div>
+          <div class="pulse-card">
+            <div class="pulse-head"><span>Hızlı nabız</span><b id="countdown">SINAVA 1 GÜN</b></div>
+            <div class="ring" id="progress-ring"><span><b id="ring-percent">0%</b><small>tamamlandı</small></span></div>
+            <div class="mini-stats">
+              <div><b id="stat-known">0</b><small>kart bilindi</small></div>
+              <div><b id="stat-correct">0</b><small>doğru yanıt</small></div>
+              <div><b id="stat-bookmarks">0</b><small>işaretli not</small></div>
+            </div>
+          </div>
+        </div>
+
+        <section class="priority-strip">
+          <div><span class="live-dot"></span><b>ÖNERİLEN AKIŞ</b></div>
+          <ol>
+            <li><button data-view="starred"><b>01</b> Yıldızlılar <small>20 dk</small></button></li>
+            <li><button data-topic="plevra"><b>02</b> Eşikler & skorlar <small>25 dk</small></button></li>
+            <li><button data-view="cards"><b>03</b> Kart turu <small>30 dk</small></button></li>
+            <li><button data-view="quiz"><b>04</b> Deneme <small>35 dk</small></button></li>
+          </ol>
+        </section>
+
+        <div class="section-head">
+          <div><span class="kicker">KONU HARİTASI</span><h2>Bugün neyi kapatıyoruz?</h2></div>
+          <button class="text-btn" data-view="topics">Tüm notları aç →</button>
+        </div>
+        <div class="topic-grid" id="dashboard-topics"></div>
+
+        <section class="exam-sprint">
+          <div>
+            <span class="kicker">60 SANİYELİK TUR</span>
+            <h2>Bir eşiği çek, cevabı söyle.</h2>
+            <p>Light, Wells, A–a gradiyenti, LTOT, bronkoskopi… Rastgele bir yüksek verim bilgisiyle kendini yokla.</p>
+          </div>
+          <button class="primary" id="random-pearl">Rastgele bilgi getir</button>
+          <blockquote id="pearl-output">“Cevabı görmeden önce yüksek sesle söyle.”</blockquote>
+        </section>
+      </section>
+
+      <section class="view" id="view-starred" aria-labelledby="starred-title">
+        <div class="page-head">
+          <div><span class="kicker">EL YAZISI + SLAYT VURGULARI</span><h1 id="starred-title">Yıldızlı kısımlar</h1><p>Kaynaklardaki ★, alt çizgi, çember ve “mutlaka/kesin soru” notlarından derlendi.</p></div>
+          <div class="legend"><span class="tag handwritten">✎ El yazısı</span><span class="tag slide">★ Slayt vurgusu</span></div>
+        </div>
+        <div class="filter-row" id="star-filters"></div>
+        <div id="starred-list" class="star-groups"></div>
+      </section>
+
+      <section class="view" id="view-topics" aria-labelledby="topics-title">
+        <div class="page-head">
+          <div><span class="kicker">KAYNAK BAZLI DERİN NOT</span><h1 id="topics-title">Konu notları</h1><p>Tanım → klinik → tanı → tedavi akışında; sınav eşikleri ayrıca vurgulandı.</p></div>
+          <label class="select-wrap">Sırala <select id="topic-sort"><option value="priority">Sınav önceliği</option><option value="az">A–Z</option><option value="source">Kaynak sırası</option></select></label>
+        </div>
+        <div class="topic-list" id="topic-list"></div>
+      </section>
+
+      <section class="view" id="view-topic" aria-live="polite"><div id="topic-detail"></div></section>
+
+      <section class="view" id="view-algorithms" aria-labelledby="algorithms-title">
+        <div class="page-head"><div><span class="kicker">EZBERİ BOŞALTAN ŞEMALAR</span><h1 id="algorithms-title">Hızlı tablolar</h1><p>Karar noktalarını bir bakışta tekrar et.</p></div></div>
+        <div class="algorithm-grid" id="algorithm-grid"></div>
+      </section>
+
+      <section class="view" id="view-cards" aria-labelledby="cards-title">
+        <div class="page-head"><div><span class="kicker">AKTİF HATIRLAMA</span><h1 id="cards-title">Öğrenme kartları</h1><p>Cevabı zihninden söyle, sonra çevir. “Biliyorum” seçimi ilerlemeye eklenir.</p></div><label class="select-wrap">Konu <select id="card-topic"><option value="all">Tümü</option></select></label></div>
+        <div class="card-stage">
+          <div class="flashcard" id="flashcard" tabindex="0" role="button" aria-label="Kartı çevir">
+            <div class="card-face card-front"><span id="card-topic-label"></span><b id="card-number"></b><h2 id="card-question"></h2><small>Çevirmek için tıkla / Space</small></div>
+            <div class="card-face card-back"><span>CEVAP</span><p id="card-answer"></p><small id="card-source"></small></div>
+          </div>
+          <div class="card-controls">
+            <button class="secondary" id="card-prev">← Önceki</button>
+            <button class="danger" id="card-again">↻ Tekrar</button>
+            <button class="success" id="card-known">✓ Biliyorum</button>
+            <button class="secondary" id="card-next">Sonraki →</button>
+          </div>
+          <div class="deck-progress"><div><span id="deck-status">Kart 1</span><span id="known-status">0 bilindi</span></div><div class="progress"><i id="deck-bar"></i></div></div>
+        </div>
+      </section>
+
+      <section class="view" id="view-quiz" aria-labelledby="quiz-title">
+        <div class="page-head"><div><span class="kicker">AÇIKLAMALI DENEME</span><h1 id="quiz-title">Soru modu</h1><p>Her yanıttan sonra kısa gerekçe açılır; yanlışlar otomatik olarak tekrar listene eklenir.</p></div><label class="select-wrap">Konu <select id="quiz-topic"><option value="all">Karma kurul</option></select></label></div>
+        <div class="quiz-layout">
+          <div class="quiz-card" id="quiz-card">
+            <div class="quiz-meta"><span id="quiz-topic-label"></span><b id="quiz-counter"></b></div>
+            <h2 id="quiz-question"></h2>
+            <div id="quiz-options" class="quiz-options"></div>
+            <div id="quiz-explanation" class="explanation" hidden></div>
+            <button class="primary" id="quiz-next" hidden>Sonraki soru →</button>
+          </div>
+          <aside class="score-panel">
+            <span>OTURUM SKORU</span><b id="quiz-score">0 / 0</b>
+            <div class="score-dots" id="score-dots"></div>
+            <button class="secondary" id="quiz-reset">Oturumu sıfırla</button>
+            <small>Soru sırası her oturumda karıştırılır.</small>
+          </aside>
+        </div>
+      </section>
+
+      <section class="view" id="view-sources" aria-labelledby="sources-title">
+        <div class="page-head"><div><span class="kicker">KAPSAM KONTROLÜ</span><h1 id="sources-title">Kaynak haritası</h1><p>Çalışmaya alınan her dosya ve özel not katmanı burada görünür.</p></div><div class="source-total"><b>578</b><span>PDF sayfası</span></div></div>
+        <div class="source-note">ℹ️ İçerikler eğitim amaçlı özetlenmiştir. Slaytlardaki dönemsel/eski eşikler “ders slaytı” etiketiyle korunmuştur; klinik karar yerine kullanılmaz.</div>
+        <div class="source-grid" id="source-grid"></div>
+      </section>
+
+      <section class="view" id="view-search" aria-labelledby="search-title">
+        <div class="page-head"><div><span class="kicker">TÜM İÇERİKTE ARAMA</span><h1 id="search-title">Arama sonuçları</h1><p id="search-summary"></p></div></div>
+        <div id="search-results" class="search-results"></div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="content.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
